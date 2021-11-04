@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "591618577958",
+    "project_id": "machinetest-35508",
+    "storage_bucket": "machinetest-35508.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591618577958:android:593b77e2afc96ce68d78e7",
+        "android_client_info": {
+          "package_name": "com.example.lucid_plus_machine_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591618577958-sikr8jnjg5is7bip5p6trp358u393kaf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3snd9DJVMNbbCR9UO0PwrIDS8_HeBtmI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "591618577958-sikr8jnjg5is7bip5p6trp358u393kaf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
