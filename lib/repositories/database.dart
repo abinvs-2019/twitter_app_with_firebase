@@ -21,23 +21,6 @@ class DatabaseMethods {
     });
   }
 
-  Future checkUserExists(username) {
-    var exist = FirebaseFirestore.instance
-        .collection("users")
-        .where("name", isEqualTo: username)
-        .get();
-    return exist;
-  }
-
-  // Future<void> createChatRoom(String chatRoomId, chatRoomMap) {
-  //   FirebaseFirestore.instance
-  //       .collection("ChatRoom")
-  //       .doc(chatRoomId)
-  //       .set(chatRoomMap)
-  //       .catchError((e) {
-  //     print(e.toString());
-  //   });
-  // }
   Future deleteTweets(idd) async {
     var id;
     await FirebaseFirestore.instance
@@ -88,12 +71,4 @@ class DatabaseMethods {
         .orderBy("time", descending: true)
         .snapshots();
   }
-
-  // getChatRoom(String userName) async {
-  //   return await FirebaseFirestore.instance
-  //       .collection("ChatRoom")
-  //       .where("users", arrayContains: userName)
-  //       .snapshots();
-  // }
-
 }

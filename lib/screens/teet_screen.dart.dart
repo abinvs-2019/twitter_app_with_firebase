@@ -4,19 +4,21 @@ import 'package:lucid_plus_machine_test/helper/contants.dart';
 import 'package:lucid_plus_machine_test/helper/login_helper.dart';
 import 'package:lucid_plus_machine_test/screens/login_screen.dart';
 import 'package:lucid_plus_machine_test/screens/new_tweet.dart';
-import 'package:lucid_plus_machine_test/services/database.dart';
+import 'package:lucid_plus_machine_test/repositories/database.dart';
 
 import 'singup_page.dart';
 
 class TweetScreen extends StatefulWidget {
+  late String email;
+  TweetScreen({required this.email});
   @override
   _TweetScreenState createState() => _TweetScreenState();
 }
 
 class _TweetScreenState extends State<TweetScreen> {
   TextEditingController messageController = TextEditingController();
-
-  late Stream? tweetStream;
+  QuerySnapshot? searchsnapshot;
+  late Stream tweetStream;
 
   bool loading = false;
   ScrollController _controller = ScrollController();
@@ -25,7 +27,7 @@ class _TweetScreenState extends State<TweetScreen> {
     return StreamBuilder(
         stream: tweetStream,
         builder: (context, snapshot) {
-          return snapshot.hasData
+          return snapshot.data != null
               ? ListView.builder(
                   controller: _controller,
                   itemCount: (snapshot.data! as QuerySnapshot).docs.length,
@@ -54,6 +56,18 @@ class _TweetScreenState extends State<TweetScreen> {
 
   @override
   void initState() {
+    DatabaseMethods().getUserbyEmail(widget.email).then((val) async {
+      searchsnapshot = val;
+      // HelperFunction.saveuserEmailInSharedPreferrence(emailcontroller.text)
+      //     .then((value) {
+      //   Constants.userEmail = emailcontroller.text;
+      // });
+
+      // Constants.myProfilePic =
+      //     await snapshotUserInfo.docs[0].data()["myprofileImage"];
+      HelperFunction.saveuserNameInSharedPreferrence(
+          searchsnapshot!.docs[0]["name"]);
+    });
     DatabaseMethods().getTweets().then((value) {
       setState(() {
         tweetStream = value;
@@ -68,11 +82,11 @@ class _TweetScreenState extends State<TweetScreen> {
   }
 
   signout() async {
-    await authMethod.signOut();
+    // await authMethod.signOut();
     HelperFunction.saveuserLoggedInSharedPreferrence(false);
     Constants.userIsLoggedIn = false;
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginPage()));
+        context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 
   @override
@@ -110,19 +124,15 @@ class tweetTile extends StatelessWidget {
   final int? time;
   final String? message;
   tweetTile({
-    this.referenseId,
-    this.isSentByMe,
-    this.sendBy,
-    this.message,
-    this.time,
+    required this.referenseId,
+    required this.isSentByMe,
+    required this.sendBy,
+    required this.message,
+    required this.time,
   });
-  var _controller;
 
-  var videoUrl;
   @override
   Widget build(BuildContext context) {
-    var popUpMentValue;
-
     return Column(
       children: [
         Row(
@@ -139,7 +149,7 @@ class tweetTile extends StatelessWidget {
                   width: 20,
                 ),
                 Text(
-                  sendBy!,
+                  sendBy ?? "User",
                   style: const TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),
@@ -176,7 +186,7 @@ class tweetTile extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              message!,
+              message ?? "no twweeys",
               style: const TextStyle(
                 color: Colors.black,
               ),

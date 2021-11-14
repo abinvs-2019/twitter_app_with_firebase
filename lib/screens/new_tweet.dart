@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucid_plus_machine_test/helper/contants.dart';
 import 'package:lucid_plus_machine_test/helper/login_helper.dart';
-import 'package:lucid_plus_machine_test/services/database.dart';
+import 'package:lucid_plus_machine_test/repositories/database.dart';
 
 class NewTweet extends StatefulWidget {
   final bool? isUpdateData;
