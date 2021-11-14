@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lucid_plus_machine_test">
+   <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="lucid_plus_machine_test"
         android:icon="@mipmap/ic_launcher">
