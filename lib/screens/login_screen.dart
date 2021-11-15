@@ -6,6 +6,7 @@ import 'package:lucid_plus_machine_test/bloc/login_bloc/login_bloc.dart';
 import 'package:lucid_plus_machine_test/bloc/login_bloc/login_event.dart';
 import 'package:lucid_plus_machine_test/bloc/login_bloc/login_state.dart';
 import 'package:lucid_plus_machine_test/repositories/user_repository.dart';
+import 'package:lucid_plus_machine_test/screens/singup_page.dart';
 import 'package:lucid_plus_machine_test/screens/teet_screen.dart.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -48,13 +49,15 @@ class _LoginScreenState extends State<LoginScreen> {
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state.isFailure!) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text("Login failed!!")));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.blue, content: Text("Login failed!!")));
           }
 
           if (state.isSubmitting!) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text("Loging in..")));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.blue,
+              content: Text("Loging in.."),
+            ));
           }
 
           if (state.isSuccess!) {
@@ -73,12 +76,6 @@ class _LoginScreenState extends State<LoginScreen> {
           create: (context) => LoginBloc(userRepository: _userRepository),
           child: Container(
             height: double.infinity,
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Color(0xfff2cbd0), Color(0xfff4ced9)],
-            )),
             child:
                 BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
               return Padding(
@@ -149,6 +146,29 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: const EdgeInsets.symmetric(vertical: 20),
                             child: const Text(
                               "Login",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.teal,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegistrationScreen()));
+                        },
+                        child: GestureDetector(
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: const Text(
+                              "Register",
                               style: TextStyle(color: Colors.white),
                             ),
                             decoration: BoxDecoration(
